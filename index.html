@@ -1,26 +1,1311 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
   <head>
-    <title>CARTA</title>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>El Rincón Español | Carta</title>
     <style>
-      html,
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap");
+
+      :root {
+        --cream: #f6efe4;
+        --paper: rgba(255, 250, 242, 0.88);
+        --paper-strong: #fffaf2;
+        --ink: #2a1d16;
+        --muted: #736055;
+        --terracotta: #9f3522;
+        --terracotta-deep: #7e2618;
+        --olive: #6b7340;
+        --gold: #cfaa62;
+        --line: rgba(54, 31, 21, 0.12);
+        --shadow: 0 24px 60px rgba(58, 30, 19, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
-        width: 100%;
-        height: 100%;
+        margin: 0;
+        font-family: "Source Sans 3", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(159, 53, 34, 0.14), transparent 30%),
+          radial-gradient(circle at top right, rgba(107, 115, 64, 0.14), transparent 26%),
+          linear-gradient(180deg, #fbf4ea 0%, var(--cream) 100%);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.28;
+        background:
+          repeating-linear-gradient(
+            90deg,
+            transparent 0,
+            transparent 42px,
+            rgba(159, 53, 34, 0.03) 42px,
+            rgba(159, 53, 34, 0.03) 43px
+          ),
+          repeating-linear-gradient(
+            0deg,
+            transparent 0,
+            transparent 42px,
+            rgba(107, 115, 64, 0.03) 42px,
+            rgba(107, 115, 64, 0.03) 43px
+          );
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .page-shell {
+        position: relative;
+        width: min(1180px, calc(100% - 28px));
+        margin: 18px auto 48px;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 14px;
+        z-index: 10;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 18px;
+      }
+
+      .topbar-inner {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        width: fit-content;
+        max-width: 100%;
+        padding: 10px;
+        border: 1px solid rgba(255, 250, 242, 0.8);
+        border-radius: 999px;
+        background: rgba(42, 29, 22, 0.72);
+        backdrop-filter: blur(18px);
+        box-shadow: 0 18px 40px rgba(42, 29, 22, 0.2);
+      }
+
+      .topbar nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .topbar a {
+        padding: 9px 14px;
+        border-radius: 999px;
+        color: #fff6eb;
+        text-decoration: none;
+        font-size: 0.96rem;
+        letter-spacing: 0.02em;
+      }
+
+      .topbar a:hover {
+        background: rgba(255, 250, 242, 0.14);
+      }
+
+      .lang-switcher {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding-left: 10px;
+        border-left: 1px solid rgba(255, 250, 242, 0.18);
+      }
+
+      .lang-button {
+        min-height: 38px;
+        padding: 0 12px;
+        border: 1px solid rgba(255, 250, 242, 0.16);
+        border-radius: 999px;
+        background: transparent;
+        color: #fff6eb;
+        font: inherit;
+        font-size: 0.92rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .lang-button:hover,
+      .lang-button.is-active {
+        background: rgba(255, 250, 242, 0.16);
+      }
+
+      .hero {
+        overflow: hidden;
+        border: 1px solid rgba(255, 250, 242, 0.85);
+        border-radius: 34px;
+        background:
+          linear-gradient(135deg, rgba(255, 250, 242, 0.92), rgba(247, 238, 224, 0.86)),
+          var(--paper);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+        gap: 28px;
+        padding: 34px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+        color: var(--terracotta);
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        font-size: 0.78rem;
+      }
+
+      .eyebrow::before,
+      .eyebrow::after {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: rgba(159, 53, 34, 0.42);
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 700;
+        line-height: 0.95;
+      }
+
+      .hero h1 {
+        font-size: clamp(3.4rem, 7vw, 6.2rem);
+        letter-spacing: 0.01em;
+      }
+
+      .hero .subtitle {
+        margin-top: 10px;
+        font-size: clamp(1.2rem, 2vw, 1.6rem);
+        color: var(--olive);
+        font-family: "Cormorant Garamond", serif;
+      }
+
+      .intro {
+        max-width: 62ch;
+        margin: 18px 0 0;
+        font-size: 1.08rem;
+        line-height: 1.75;
+        color: var(--muted);
+      }
+
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 22px;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        min-height: 38px;
+        padding: 0 14px;
+        border: 1px solid rgba(159, 53, 34, 0.14);
+        border-radius: 999px;
+        background: rgba(255, 250, 242, 0.72);
+        color: var(--ink);
+        font-weight: 600;
+      }
+
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 0 18px;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        transition: transform 120ms ease, background-color 120ms ease, border-color 120ms ease;
+      }
+
+      .button:hover {
+        transform: translateY(-1px);
+      }
+
+      .button.primary {
+        background: var(--terracotta);
+        color: #fffaf2;
+      }
+
+      .button.primary:hover {
+        background: var(--terracotta-deep);
+      }
+
+      .button.secondary {
+        border-color: var(--line);
+        background: rgba(255, 250, 242, 0.86);
+      }
+
+      .button.secondary:hover {
+        background: #fffaf2;
+      }
+
+      .hero-card {
+        display: grid;
+        gap: 14px;
+        align-content: space-between;
+      }
+
+      .info-card,
+      .menu-section {
+        border: 1px solid var(--line);
+        background: var(--paper);
+        box-shadow: var(--shadow);
+      }
+
+      .info-card {
+        padding: 24px;
+        border-radius: 26px;
+      }
+
+      .info-card h2 {
+        font-size: 2.1rem;
+        margin-bottom: 10px;
+      }
+
+      .info-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .info-card strong {
+        color: var(--ink);
+      }
+
+      .mini-grid {
+        display: grid;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .mini-grid div {
+        padding-top: 12px;
+        border-top: 1px solid var(--line);
+      }
+
+      .mini-grid span {
+        display: block;
+        color: var(--terracotta);
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .mini-grid strong {
+        display: block;
+        margin-top: 3px;
+        font-size: 1.06rem;
+      }
+
+      .section-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 16px;
+        margin: 38px 0 16px;
+      }
+
+      .section-heading h2 {
+        font-size: clamp(2.4rem, 4vw, 3.4rem);
+      }
+
+      .section-heading p {
+        margin: 0;
+        max-width: 48ch;
+        color: var(--muted);
+      }
+
+      .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .menu-section {
+        border-radius: 28px;
+        padding: 24px 22px;
+      }
+
+      .menu-section.full {
+        grid-column: 1 / -1;
+      }
+
+      .menu-section h3 {
+        font-size: 2.1rem;
+        margin-bottom: 8px;
+      }
+
+      .menu-section .section-copy {
+        margin: 0 0 18px;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .menu-columns {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .menu-list {
+        list-style: none;
+        padding: 0;
         margin: 0;
       }
 
-      iframe {
+      .menu-list li {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 14px;
+        align-items: baseline;
+        padding: 11px 0;
+        border-bottom: 1px dashed rgba(54, 31, 21, 0.14);
+      }
+
+      .menu-list li:last-child {
+        border-bottom: 0;
+      }
+
+      .dish {
         display: block;
-        width: 100%;
-        height: 100vh;
-        height: 100dvh;
-        border: 0;
+        font-size: 1.02rem;
+        font-weight: 600;
+      }
+
+      .detail {
+        display: block;
+        margin-top: 3px;
+        color: var(--muted);
+        line-height: 1.45;
+        font-size: 0.94rem;
+      }
+
+      .price {
+        color: var(--terracotta);
+        font-weight: 700;
+        font-size: 1rem;
+        white-space: nowrap;
+      }
+
+      @media (max-width: 980px) {
+        .hero-inner,
+        .menu-grid,
+        .menu-columns {
+          grid-template-columns: 1fr;
+        }
+
+        .page-shell {
+          width: min(100%, calc(100% - 20px));
+          margin-top: 10px;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .topbar {
+          top: 8px;
+        }
+
+        .topbar-inner {
+          border-radius: 24px;
+        }
+
+        .lang-switcher {
+          justify-content: center;
+          width: 100%;
+          padding-left: 0;
+          border-left: 0;
+          border-top: 1px solid rgba(255, 250, 242, 0.18);
+          padding-top: 8px;
+        }
+
+        .hero-inner,
+        .menu-section,
+        .info-card {
+          padding: 22px 18px;
+        }
+
+        .hero {
+          border-radius: 28px;
+        }
+
+        .feature {
+          padding: 18px;
+        }
+
+        .button {
+          width: 100%;
+        }
       }
     </style>
   </head>
   <body>
-    <iframe src="CARTA.pdf"></iframe>
+    <div class="page-shell">
+      <div class="topbar">
+        <div class="topbar-inner">
+          <nav aria-label="Navegación de la carta">
+            <a href="#tapas" data-i18n="nav.tapas">Tapas</a>
+            <a href="#platos" data-i18n="nav.platos">Platos</a>
+            <a href="#china" data-i18n="nav.china">Comida china</a>
+            <a href="#burgers" data-i18n="nav.burgers">Hamburguesas</a>
+            <a href="#bombitas" data-i18n="nav.bombitas">Bombitas</a>
+            <a href="#bocadillos" data-i18n="nav.bocadillos">Bocadillos</a>
+          </nav>
+          <div class="lang-switcher" aria-label="Selector de idioma">
+            <button class="lang-button is-active" type="button" data-lang="es">ES</button>
+            <button class="lang-button" type="button" data-lang="en">EN</button>
+            <button class="lang-button" type="button" data-lang="zh">中文</button>
+          </div>
+        </div>
+      </div>
+
+      <header class="hero">
+        <div class="hero-inner">
+          <section>
+            <div class="eyebrow" data-i18n="hero.eyebrow">Valencia · Aragón · Mestalla</div>
+            <h1>El Rincón Español</h1>
+            <p class="subtitle" data-i18n="hero.subtitle">Carta con sabor castizo, tapas para compartir y clásicos de barra</p>
+            <p class="intro" data-i18n="hero.intro">
+              Tapas, bocadillos y platos de la casa.
+            </p>
+
+            <div class="tag-row">
+              <span class="tag" data-i18n="hero.tag1">Tapas tradicionales</span>
+              <span class="tag" data-i18n="hero.tag2">Bocadillos y bombitas</span>
+              <span class="tag" data-i18n="hero.tag3">Zona Mestalla</span>
+            </div>
+
+            <div class="cta-row">
+              <a class="button primary" href="tel:+34620475255" data-i18n="hero.call">Llamar al restaurante</a>
+              <a
+                class="button secondary"
+                href="https://www.google.com/maps/search/?api=1&query=C%2F+de+Finl%C3%A0ndia%2C+11%2C+Val%C3%A8ncia"
+                target="_blank"
+                rel="noopener"
+                data-i18n="hero.location"
+              >
+                Ver ubicación
+              </a>
+              <a class="button secondary" href="./CARTA.pdf" target="_blank" rel="noopener" data-i18n="hero.pdf">
+                Ver carta original en PDF
+              </a>
+            </div>
+          </section>
+
+          <aside class="hero-card">
+            <div class="info-card">
+              <h2 data-i18n="info.title">La casa</h2>
+              <p>
+                <strong data-i18n="info.address">Dirección:</strong> C/ de Finlàndia, 11, El Pla del Real,
+                València.
+              </p>
+              <div class="mini-grid">
+                <div>
+                  <span data-i18n="info.hours">Horario</span>
+                  <strong>Lunes, miércoles a domingo · 10:00 a 23:00</strong>
+                </div>
+                <div>
+                  <span data-i18n="info.tuesday">Martes</span>
+                  <strong data-i18n="info.closed">Cerrado</strong>
+                </div>
+                <div>
+                  <span data-i18n="info.holidays">Festivos</span>
+                  <strong>09:00 a 23:30</strong>
+                </div>
+                <div>
+                  <span data-i18n="info.phone">Teléfono</span>
+                  <strong>620 475 255</strong>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </header>
+
+      <div class="section-heading" id="tapas">
+        <h2 data-i18n="sections.tapas.title">Tapas</h2>
+        <p data-i18n="sections.tapas.copy">
+          Carta pensada para picar, compartir y alargar la mesa. Desde fritos de
+          barra hasta plancha y marisco.
+        </p>
+      </div>
+
+      <section class="menu-grid">
+        <article class="menu-section full">
+          <h3 data-i18n="sections.tapas.card">Para abrir boca</h3>
+          <p class="section-copy" data-i18n="sections.tapas.cardCopy">
+            Una selección de tapas con mezcla de clásicos españoles, guiños de
+            barra moderna y opciones para compartir.
+          </p>
+          <div class="menu-columns">
+            <ul class="menu-list">
+              <li><span class="dish" data-i18n="menu.tapas.patatasBravas">Patatas bravas</span><span class="price">5,50€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.patatasFritas">Patatas fritas</span><span class="price">5,00€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.nachos">Nachos</span><span class="price">6,50€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.patatasCheeseBacon">Patatas cheese bacon</span><span class="price">7,00€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.edamame">Edamame</span><span class="price">5,00€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.pimientosPadron">Pimientos de padrón</span><span class="price">5,50€</span></li>
+              <li><span class="dish"><span data-i18n="menu.tapas.croquetas.name">Croquetas</span> <span class="detail" data-i18n="menu.tapas.croquetas.detail">5 unidades</span></span><span class="price">5,90€</span></li>
+              <li><span class="dish"><span data-i18n="menu.tapas.gyozas.name">Gyozas</span> <span class="detail" data-i18n="menu.tapas.gyozas.detail">6 unidades</span></span><span class="price">5,90€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.quesoFrito">Queso frito</span><span class="price">5,90€</span></li>
+              <li><span class="dish"><span data-i18n="menu.tapas.pinchitoAnchoa.name">Pinchito de anchoa</span> <span class="detail" data-i18n="menu.tapas.pinchitoAnchoa.detail">1 unidad</span></span><span class="price">1,50€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.frituraPolloMixto">Fritura de pollo mixto</span><span class="price">10,80€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.tirasPolloCajun">Tiras de pollo cajún</span><span class="price">6,90€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.alitasPolloPapas">Alitas de pollo con papas</span><span class="price">6,50€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.nuggetsPolloPapas">Nuggets de pollo con papas</span><span class="price">6,50€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.torreznoSoria">Torrezno de Soria</span><span class="price">8,50€</span></li>
+            </ul>
+
+            <ul class="menu-list">
+              <li><span class="dish" data-i18n="menu.tapas.polloLimon">Pollo limón</span><span class="price">6,90€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.raboCerdo">Rabo de cerdo</span><span class="price">7,50€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.boqueronesVinagre">Boquerones en vinagre</span><span class="price">6,90€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.boqueronesFritos">Boquerones fritos</span><span class="price">7,90€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.champinonesPlancha">Champiñones a la plancha</span><span class="price">5,90€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.calamaresRomana">Calamares a la romana</span><span class="price">8,50€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.rejosCalamar">Rejos de calamar fritos</span><span class="price">8,00€</span></li>
+              <li><span class="dish"><span data-i18n="menu.tapas.mejillonTigre.name">Mejillón tigre</span> <span class="detail" data-i18n="menu.tapas.mejillonTigre.detail">6 unidades</span></span><span class="price">6,90€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.puntillasRebozadas">Puntillas rebozadas</span><span class="price">8,00€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.rollitosVegetales">Rollitos vegetales</span><span class="price">5,90€</span></li>
+              <li><span class="dish"><span data-i18n="menu.tapas.vieiraPlancha.name">Vieira a la plancha</span> <span class="detail" data-i18n="menu.tapas.vieiraPlancha.detail">4 unidades</span></span><span class="price">5,90€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.gambasAjillo">Gambas al ajillo</span><span class="price">8,50€</span></li>
+              <li><span class="dish"><span data-i18n="menu.tapas.langostinosFritos.name">Langostinos fritos</span> <span class="detail" data-i18n="menu.tapas.langostinosFritos.detail">6 unidades</span></span><span class="price">6,50€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.cestaPan">Cesta de pan normal</span><span class="price">1,00€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.panTomateAlioli">Pan tostado con tomate o alioli</span><span class="price">2,50€</span></li>
+              <li><span class="dish" data-i18n="menu.tapas.sepiaPlancha">Sepia a la plancha</span><span class="price">10,50€</span></li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <div class="section-heading" id="platos">
+        <h2 data-i18n="sections.platos.title">Platos combinados</h2>
+        <p data-i18n="sections.platos.copy">
+          Ensaladas, plancha, carnes y pescados para quien busca sentarse con algo
+          más completo.
+        </p>
+      </div>
+
+      <section class="menu-grid">
+        <article class="menu-section">
+          <h3 data-i18n="sections.platos.salads">Ensaladas y entrantes</h3>
+          <ul class="menu-list">
+            <li>
+              <span class="dish">
+                <span data-i18n="menu.platos.ensaladaValencia.name">Ensalada Valencia</span>
+                <span class="detail" data-i18n="menu.platos.ensaladaValencia.detail">Lechuga, cherry, zanahoria, maíz, atún, huevo, aceitunas, cebolla y frutos secos</span>
+              </span>
+              <span class="price">7,80€</span>
+            </li>
+            <li>
+              <span class="dish">
+                <span data-i18n="menu.platos.ensaladaCesar.name">Ensalada César</span>
+                <span class="detail" data-i18n="menu.platos.ensaladaCesar.detail">Lechuga, picatostes, maíz, pollo empanado, salsa César y tomate</span>
+              </span>
+              <span class="price">7,50€</span>
+            </li>
+            <li>
+              <span class="dish">
+                <span data-i18n="menu.platos.ensaladaCabra.name">Ensalada con queso de cabra</span>
+                <span class="detail" data-i18n="menu.platos.ensaladaCabra.detail">Lechuga, queso de cabra, nueces, pasas y tomate</span>
+              </span>
+              <span class="price">7,80€</span>
+            </li>
+            <li>
+              <span class="dish">
+                <span data-i18n="menu.platos.ensaladaBurrata.name">Ensalada burrata</span>
+                <span class="detail" data-i18n="menu.platos.ensaladaBurrata.detail">Burrata, rúcula, tomates cherry, mermelada, pistachos y nueces</span>
+              </span>
+              <span class="price">7,80€</span>
+            </li>
+            <li><span class="dish" data-i18n="menu.platos.huevosRotos">Huevos rotos con jamón</span><span class="price">7,00€</span></li>
+          </ul>
+        </article>
+
+        <article class="menu-section">
+          <h3 data-i18n="sections.platos.grill">Plancha, carne y pescado</h3>
+          <ul class="menu-list">
+            <li><span class="dish" data-i18n="menu.platos.entrecot">Entrecot de vaca simental a la plancha</span><span class="price">14,90€</span></li>
+            <li><span class="dish" data-i18n="menu.platos.sepionet">Sepionet con salsa verde a la plancha</span><span class="price">13,90€</span></li>
+            <li><span class="dish" data-i18n="menu.platos.calamaresRomana">Calamares a la romana</span><span class="price">11,80€</span></li>
+            <li><span class="dish" data-i18n="menu.platos.emperador">Emperador a la plancha</span><span class="price">11,80€</span></li>
+            <li><span class="dish" data-i18n="menu.platos.pechugaEmpanada">Pechuga de pollo empanada</span><span class="price">9,80€</span></li>
+            <li><span class="dish" data-i18n="menu.platos.pechugaPlancha">Pechuga de pollo a la plancha</span><span class="price">9,80€</span></li>
+          </ul>
+        </article>
+      </section>
+
+      <div class="section-heading" id="china">
+        <h2 data-i18n="sections.china.title">Comida china</h2>
+        <p data-i18n="sections.china.copy">
+          Un bloque aparte dentro de la carta, con arroces, tallarines y sopas.
+        </p>
+      </div>
+
+      <section class="menu-grid">
+        <article class="menu-section full">
+          <h3 data-i18n="sections.china.card">Arroces, tallarines y sopas</h3>
+          <div class="menu-columns">
+            <ul class="menu-list">
+              <li><span class="dish" data-i18n="menu.china.arrozTresDelicias">Arroz frito tres delicias</span><span class="price">5,50€</span></li>
+              <li><span class="dish" data-i18n="menu.china.arrozGambas">Arroz frito con gambas</span><span class="price">6,00€</span></li>
+              <li><span class="dish" data-i18n="menu.china.arrozTernera">Arroz frito con ternera</span><span class="price">7,00€</span></li>
+              <li><span class="dish" data-i18n="menu.china.tallarinesPollo">Tallarines fritos de pollo</span><span class="price">6,00€</span></li>
+              <li><span class="dish" data-i18n="menu.china.tallarinesGambas">Tallarines fritos con gambas</span><span class="price">6,50€</span></li>
+            </ul>
+            <ul class="menu-list">
+              <li><span class="dish" data-i18n="menu.china.tallarinesTernera">Tallarines fritos con ternera</span><span class="price">7,00€</span></li>
+              <li><span class="dish" data-i18n="menu.china.ramen">Fideos chiken ramen</span><span class="price">7,00€</span></li>
+              <li><span class="dish" data-i18n="menu.china.sopaPicante">Sopa picante</span><span class="price">4,50€</span></li>
+              <li><span class="dish" data-i18n="menu.china.sopaMaizPollo">Sopa de maíz con pollo</span><span class="price">4,50€</span></li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <div class="section-heading" id="burgers">
+        <h2 data-i18n="sections.burgers.title">Hamburguesas y sándwiches</h2>
+        <p data-i18n="sections.burgers.copy">
+          Para un perfil más informal, con combinaciones completas y sabores
+          contundentes.
+        </p>
+      </div>
+
+      <section class="menu-grid">
+        <article class="menu-section">
+          <h3 data-i18n="sections.burgers.burgers">Hamburguesas</h3>
+          <ul class="menu-list">
+            <li>
+              <span class="dish">
+                <span data-i18n="menu.burgers.buey.name">Hamburguesa de buey 200 g</span>
+                <span class="detail" data-i18n="menu.burgers.buey.detail">Carne, tomate, lechuga, bacon, queso, huevo, cebolla y mayonesa</span>
+              </span>
+              <span class="price">8,80€</span>
+            </li>
+            <li>
+              <span class="dish">
+                <span data-i18n="menu.burgers.doblePollo.name">Hamburguesa de doble pollo</span>
+                <span class="detail" data-i18n="menu.burgers.doblePollo.detail">Pollo crujiente, tomate, lechuga, bacon, queso, huevo, pepino y mayonesa</span>
+              </span>
+              <span class="price">8,80€</span>
+            </li>
+          </ul>
+        </article>
+
+        <article class="menu-section">
+          <h3 data-i18n="sections.burgers.sandwiches">Sándwiches</h3>
+          <ul class="menu-list">
+            <li><span class="dish"><span data-i18n="menu.sandwiches.mixto.name">Sándwich mixto</span> <span class="detail" data-i18n="menu.sandwiches.mixto.detail">Jamón york y queso</span></span><span class="price">4,00€</span></li>
+            <li>
+              <span class="dish">
+                <span data-i18n="menu.sandwiches.vegetal.name">Sándwich vegetal</span>
+                <span class="detail" data-i18n="menu.sandwiches.vegetal.detail">Mayonesa, lechuga, tomate, queso, zanahoria, remolacha y huevo</span>
+              </span>
+              <span class="price">6,50€</span>
+            </li>
+          </ul>
+        </article>
+      </section>
+
+      <div class="section-heading" id="bombitas">
+        <h2 data-i18n="sections.bombitas.title">Bombitas</h2>
+        <p data-i18n="sections.bombitas.copy">
+          Cuatro combinaciones con personalidad propia, pensadas para un bocado
+          rápido y sabroso.
+        </p>
+      </div>
+
+      <section class="menu-grid">
+        <article class="menu-section full">
+          <h3 data-i18n="sections.bombitas.card">Especialidades</h3>
+          <div class="menu-columns">
+            <ul class="menu-list">
+              <li>
+                <span class="dish">
+                  <span data-i18n="menu.bombitas.chivito.name">Chivito</span>
+                  <span class="detail" data-i18n="menu.bombitas.chivito.detail">Lechuga, mayonesa, tomate, lomo, bacon, queso y huevo</span>
+                </span>
+                <span class="price">4,50€</span>
+              </li>
+              <li>
+                <span class="dish">
+                  <span data-i18n="menu.bombitas.brascadaBrutal.name">Brascada brutal</span>
+                  <span class="detail" data-i18n="menu.bombitas.brascadaBrutal.detail">Tomate, ternera, jamón, queso de cabra y cebolla</span>
+                </span>
+                <span class="price">5,00€</span>
+              </li>
+            </ul>
+            <ul class="menu-list">
+              <li>
+                <span class="dish">
+                  <span data-i18n="menu.bombitas.beatriz.name">Beatriz</span>
+                  <span class="detail" data-i18n="menu.bombitas.beatriz.detail">Salsa rosa, lechuga, pechuga de pollo, jamón, queso de cabra y cebolla</span>
+                </span>
+                <span class="price">5,00€</span>
+              </li>
+              <li>
+                <span class="dish">
+                  <span data-i18n="menu.bombitas.sopo.name">Sopo</span>
+                  <span class="detail" data-i18n="menu.bombitas.sopo.detail">Sobrasada, miel, pechuga de pollo, queso de cabra y cebolla</span>
+                </span>
+                <span class="price">4,50€</span>
+              </li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <div class="section-heading" id="bocadillos">
+        <h2 data-i18n="sections.bocadillos.title">Bocadillos</h2>
+        <p data-i18n="sections.bocadillos.copy">
+          La parte más de bar valenciano de la carta: contundente, directa y muy
+          de almuerzo o cena informal.
+        </p>
+      </div>
+
+      <section class="menu-grid">
+        <article class="menu-section full">
+          <h3 data-i18n="sections.bocadillos.card">Clásicos de barra</h3>
+          <div class="menu-columns">
+            <ul class="menu-list">
+              <li>
+                <span class="dish">
+                  <span data-i18n="menu.bocadillos.chupadedo.name">Chupadedo</span>
+                  <span class="detail" data-i18n="menu.bocadillos.chupadedo.detail">Mayonesa, lechuga, tomate, pechuga de pollo, bacon, queso y huevo</span>
+                </span>
+                <span class="price">7,00€</span>
+              </li>
+              <li>
+                <span class="dish">
+                  <span data-i18n="menu.bocadillos.chivito.name">Chivito</span>
+                  <span class="detail" data-i18n="menu.bocadillos.chivito.detail">Lechuga, mayonesa, tomate, lomo, bacon, queso y huevo</span>
+                </span>
+                <span class="price">7,00€</span>
+              </li>
+              <li><span class="dish" data-i18n="menu.bocadillos.medioChivito">Medio chivito</span><span class="price">4,50€</span></li>
+              <li><span class="dish"><span data-i18n="menu.bocadillos.brascada.name">Brascada</span> <span class="detail" data-i18n="menu.bocadillos.brascada.detail">Ternera, jamón y cebolla</span></span><span class="price">8,00€</span></li>
+              <li><span class="dish"><span data-i18n="menu.bocadillos.almussafes.name">Almussafes</span> <span class="detail" data-i18n="menu.bocadillos.almussafes.detail">Sobrasada, cebolla y queso</span></span><span class="price">6,50€</span></li>
+              <li>
+                <span class="dish">
+                  <span data-i18n="menu.bocadillos.polloEmpanado.name">Pollo empanado</span>
+                  <span class="detail" data-i18n="menu.bocadillos.polloEmpanado.detail">Mayonesa, pollo empanado y pimiento</span>
+                </span>
+                <span class="price">7,00€</span>
+              </li>
+            </ul>
+            <ul class="menu-list">
+              <li><span class="dish" data-i18n="menu.bocadillos.jamonQueso">Jamón con queso</span><span class="price">5,50€</span></li>
+              <li><span class="dish" data-i18n="menu.bocadillos.calamaresRomana">Calamares a la romana</span><span class="price">7,50€</span></li>
+              <li><span class="dish" data-i18n="menu.bocadillos.lomoQuesoJamonTomate">Lomo, queso, jamón y tomate</span><span class="price">7,00€</span></li>
+              <li><span class="dish" data-i18n="menu.bocadillos.lomoQuesoLonganiza">Lomo, queso y longaniza</span><span class="price">6,50€</span></li>
+              <li><span class="dish" data-i18n="menu.bocadillos.lomoQueso">Lomo queso</span><span class="price">5,50€</span></li>
+              <li><span class="dish" data-i18n="menu.bocadillos.longanizaMorcillaChorizo">Longaniza, morcilla y chorizo</span><span class="price">6,50€</span></li>
+              <li><span class="dish" data-i18n="menu.bocadillos.tortillaJamon">Tortilla francesa y jamón</span><span class="price">6,00€</span></li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+    </div>
+
+    <script>
+      const translations = {
+        es: {
+          title: "El Rincón Español | Carta",
+          "nav.tapas": "Tapas",
+          "nav.platos": "Platos",
+          "nav.china": "Comida china",
+          "nav.burgers": "Hamburguesas",
+          "nav.bombitas": "Bombitas",
+          "nav.bocadillos": "Bocadillos",
+          "hero.eyebrow": "Valencia · Aragón · Mestalla",
+          "hero.subtitle": "Carta con sabor castizo, tapas para compartir y clásicos de barra",
+          "hero.intro": "Tapas, bocadillos y platos de la casa.",
+          "hero.tag1": "Tapas tradicionales",
+          "hero.tag2": "Bocadillos y bombitas",
+          "hero.tag3": "Zona Mestalla",
+          "hero.call": "Llamar al restaurante",
+          "hero.location": "Ver ubicación",
+          "hero.pdf": "Ver carta original en PDF",
+          "info.title": "La casa",
+          "info.address": "Dirección:",
+          "info.hours": "Horario",
+          "info.tuesday": "Martes",
+          "info.closed": "Cerrado",
+          "info.holidays": "Festivos",
+          "info.phone": "Teléfono",
+          "sections.tapas.title": "Tapas",
+          "sections.tapas.copy": "Carta pensada para picar, compartir y alargar la mesa. Desde fritos de barra hasta plancha y marisco.",
+          "sections.tapas.card": "Para abrir boca",
+          "sections.tapas.cardCopy": "Una selección de tapas con mezcla de clásicos españoles, guiños de barra moderna y opciones para compartir.",
+          "sections.platos.title": "Platos combinados",
+          "sections.platos.copy": "Ensaladas, plancha, carnes y pescados para quien busca sentarse con algo más completo.",
+          "sections.platos.salads": "Ensaladas y entrantes",
+          "sections.platos.grill": "Plancha, carne y pescado",
+          "sections.china.title": "Comida china",
+          "sections.china.copy": "Un bloque aparte dentro de la carta, con arroces, tallarines y sopas.",
+          "sections.china.card": "Arroces, tallarines y sopas",
+          "sections.burgers.title": "Hamburguesas y sándwiches",
+          "sections.burgers.copy": "Para un perfil más informal, con combinaciones completas y sabores contundentes.",
+          "sections.burgers.burgers": "Hamburguesas",
+          "sections.burgers.sandwiches": "Sándwiches",
+          "sections.bombitas.title": "Bombitas",
+          "sections.bombitas.copy": "Cuatro combinaciones con personalidad propia, pensadas para un bocado rápido y sabroso.",
+          "sections.bombitas.card": "Especialidades",
+          "sections.bocadillos.title": "Bocadillos",
+          "sections.bocadillos.copy": "La parte más de bar valenciano de la carta: contundente, directa y muy de almuerzo o cena informal.",
+          "sections.bocadillos.card": "Clásicos de barra"
+        },
+        en: {
+          title: "El Rincón Español | Menu",
+          "nav.tapas": "Tapas",
+          "nav.platos": "Main plates",
+          "nav.china": "Chinese food",
+          "nav.burgers": "Burgers",
+          "nav.bombitas": "Bombitas",
+          "nav.bocadillos": "Bocadillos",
+          "hero.eyebrow": "Valencia · Aragón · Mestalla",
+          "hero.subtitle": "A menu full of Spanish tavern flavor, shareable tapas and classic bar dishes",
+          "hero.intro": "Tapas, sandwiches and house dishes.",
+          "hero.tag1": "Traditional tapas",
+          "hero.tag2": "Bocadillos and bombitas",
+          "hero.tag3": "Mestalla area",
+          "hero.call": "Call the restaurant",
+          "hero.location": "See location",
+          "hero.pdf": "Open original PDF menu",
+          "info.title": "The house",
+          "info.address": "Address:",
+          "info.hours": "Hours",
+          "info.tuesday": "Tuesday",
+          "info.closed": "Closed",
+          "info.holidays": "Holidays",
+          "info.phone": "Phone",
+          "sections.tapas.title": "Tapas",
+          "sections.tapas.copy": "A menu designed for sharing, snacking and stretching the table time. From fried bar classics to grilled seafood.",
+          "sections.tapas.card": "To start with",
+          "sections.tapas.cardCopy": "A selection of tapas mixing Spanish classics, modern bar touches and options made for sharing.",
+          "sections.platos.title": "Main plates",
+          "sections.platos.copy": "Salads, grilled dishes, meats and fish for anyone looking for something more complete.",
+          "sections.platos.salads": "Salads and starters",
+          "sections.platos.grill": "Grill, meat and fish",
+          "sections.china.title": "Chinese food",
+          "sections.china.copy": "A separate section of the menu with rice dishes, noodles and soups.",
+          "sections.china.card": "Rice, noodles and soups",
+          "sections.burgers.title": "Burgers and sandwiches",
+          "sections.burgers.copy": "For a more casual appetite, with complete combinations and bold flavors.",
+          "sections.burgers.burgers": "Burgers",
+          "sections.burgers.sandwiches": "Sandwiches",
+          "sections.bombitas.title": "Bombitas",
+          "sections.bombitas.copy": "Four personality-filled combinations, made for a quick and tasty bite.",
+          "sections.bombitas.card": "Specialties",
+          "sections.bocadillos.title": "Bocadillos",
+          "sections.bocadillos.copy": "The most Valencian bar-style part of the menu: hearty, direct and perfect for lunch or an informal dinner.",
+          "sections.bocadillos.card": "Bar classics"
+        },
+        zh: {
+          title: "El Rincón Español | 菜单",
+          "nav.tapas": "小吃",
+          "nav.platos": "主菜",
+          "nav.china": "中餐",
+          "nav.burgers": "汉堡",
+          "nav.bombitas": "Bombitas",
+          "nav.bocadillos": "三明治",
+          "hero.eyebrow": "瓦伦西亚 · Aragón · Mestalla",
+          "hero.subtitle": "西班牙酒馆风味菜单，适合分享的小吃与经典吧台料理",
+          "hero.intro": "西班牙小吃、夹饼和本店主菜。",
+          "hero.tag1": "传统西班牙小吃",
+          "hero.tag2": "夹饼与 bombitas",
+          "hero.tag3": "Mestalla 区域",
+          "hero.call": "致电餐厅",
+          "hero.location": "查看位置",
+          "hero.pdf": "查看原始 PDF 菜单",
+          "info.title": "餐厅信息",
+          "info.address": "地址：",
+          "info.hours": "营业时间",
+          "info.tuesday": "星期二",
+          "info.closed": "休息",
+          "info.holidays": "节假日",
+          "info.phone": "电话",
+          "sections.tapas.title": "小吃",
+          "sections.tapas.copy": "适合分享、边吃边聊的菜单部分，从吧台炸物到铁板和海鲜都有。",
+          "sections.tapas.card": "开胃推荐",
+          "sections.tapas.cardCopy": "结合西班牙经典、现代酒吧风格和适合多人分享的各类 tapas。",
+          "sections.platos.title": "主菜拼盘",
+          "sections.platos.copy": "沙拉、铁板、肉类和鱼类，适合想吃得更完整的客人。",
+          "sections.platos.salads": "沙拉与前菜",
+          "sections.platos.grill": "铁板、肉类与鱼类",
+          "sections.china.title": "中餐",
+          "sections.china.copy": "菜单中的独立部分，包含炒饭、面类和汤品。",
+          "sections.china.card": "炒饭、面类和汤品",
+          "sections.burgers.title": "汉堡与三明治",
+          "sections.burgers.copy": "更轻松随性的选择，搭配丰富、口味浓郁。",
+          "sections.burgers.burgers": "汉堡",
+          "sections.burgers.sandwiches": "三明治",
+          "sections.bombitas.title": "Bombitas",
+          "sections.bombitas.copy": "四种各有个性的组合，适合快速又满足的一口。",
+          "sections.bombitas.card": "特色推荐",
+          "sections.bocadillos.title": "夹饼",
+          "sections.bocadillos.copy": "最有瓦伦西亚酒吧风格的一部分：扎实直接，很适合午餐或随性晚餐。",
+          "sections.bocadillos.card": "吧台经典"
+        }
+      };
+
+      Object.assign(translations.es, {
+        "menu.tapas.patatasBravas": "Patatas bravas",
+        "menu.tapas.patatasFritas": "Patatas fritas",
+        "menu.tapas.nachos": "Nachos",
+        "menu.tapas.patatasCheeseBacon": "Patatas cheese bacon",
+        "menu.tapas.edamame": "Edamame",
+        "menu.tapas.pimientosPadron": "Pimientos de padrón",
+        "menu.tapas.croquetas.name": "Croquetas",
+        "menu.tapas.croquetas.detail": "5 unidades",
+        "menu.tapas.gyozas.name": "Gyozas",
+        "menu.tapas.gyozas.detail": "6 unidades",
+        "menu.tapas.quesoFrito": "Queso frito",
+        "menu.tapas.pinchitoAnchoa.name": "Pinchito de anchoa",
+        "menu.tapas.pinchitoAnchoa.detail": "1 unidad",
+        "menu.tapas.frituraPolloMixto": "Fritura de pollo mixto",
+        "menu.tapas.tirasPolloCajun": "Tiras de pollo cajún",
+        "menu.tapas.alitasPolloPapas": "Alitas de pollo con papas",
+        "menu.tapas.nuggetsPolloPapas": "Nuggets de pollo con papas",
+        "menu.tapas.torreznoSoria": "Torrezno de Soria",
+        "menu.tapas.polloLimon": "Pollo limón",
+        "menu.tapas.raboCerdo": "Rabo de cerdo",
+        "menu.tapas.boqueronesVinagre": "Boquerones en vinagre",
+        "menu.tapas.boqueronesFritos": "Boquerones fritos",
+        "menu.tapas.champinonesPlancha": "Champiñones a la plancha",
+        "menu.tapas.calamaresRomana": "Calamares a la romana",
+        "menu.tapas.rejosCalamar": "Rejos de calamar fritos",
+        "menu.tapas.mejillonTigre.name": "Mejillón tigre",
+        "menu.tapas.mejillonTigre.detail": "6 unidades",
+        "menu.tapas.puntillasRebozadas": "Puntillas rebozadas",
+        "menu.tapas.rollitosVegetales": "Rollitos vegetales",
+        "menu.tapas.vieiraPlancha.name": "Vieira a la plancha",
+        "menu.tapas.vieiraPlancha.detail": "4 unidades",
+        "menu.tapas.gambasAjillo": "Gambas al ajillo",
+        "menu.tapas.langostinosFritos.name": "Langostinos fritos",
+        "menu.tapas.langostinosFritos.detail": "6 unidades",
+        "menu.tapas.cestaPan": "Cesta de pan normal",
+        "menu.tapas.panTomateAlioli": "Pan tostado con tomate o alioli",
+        "menu.tapas.sepiaPlancha": "Sepia a la plancha",
+        "menu.platos.ensaladaValencia.name": "Ensalada Valencia",
+        "menu.platos.ensaladaValencia.detail": "Lechuga, cherry, zanahoria, maíz, atún, huevo, aceitunas, cebolla y frutos secos",
+        "menu.platos.ensaladaCesar.name": "Ensalada César",
+        "menu.platos.ensaladaCesar.detail": "Lechuga, picatostes, maíz, pollo empanado, salsa César y tomate",
+        "menu.platos.ensaladaCabra.name": "Ensalada con queso de cabra",
+        "menu.platos.ensaladaCabra.detail": "Lechuga, queso de cabra, nueces, pasas y tomate",
+        "menu.platos.ensaladaBurrata.name": "Ensalada burrata",
+        "menu.platos.ensaladaBurrata.detail": "Burrata, rúcula, tomates cherry, mermelada, pistachos y nueces",
+        "menu.platos.huevosRotos": "Huevos rotos con jamón",
+        "menu.platos.entrecot": "Entrecot de vaca simental a la plancha",
+        "menu.platos.sepionet": "Sepionet con salsa verde a la plancha",
+        "menu.platos.calamaresRomana": "Calamares a la romana",
+        "menu.platos.emperador": "Emperador a la plancha",
+        "menu.platos.pechugaEmpanada": "Pechuga de pollo empanada",
+        "menu.platos.pechugaPlancha": "Pechuga de pollo a la plancha",
+        "menu.china.arrozTresDelicias": "Arroz frito tres delicias",
+        "menu.china.arrozGambas": "Arroz frito con gambas",
+        "menu.china.arrozTernera": "Arroz frito con ternera",
+        "menu.china.tallarinesPollo": "Tallarines fritos de pollo",
+        "menu.china.tallarinesGambas": "Tallarines fritos con gambas",
+        "menu.china.tallarinesTernera": "Tallarines fritos con ternera",
+        "menu.china.ramen": "Fideos chiken ramen",
+        "menu.china.sopaPicante": "Sopa picante",
+        "menu.china.sopaMaizPollo": "Sopa de maíz con pollo",
+        "menu.burgers.buey.name": "Hamburguesa de buey 200 g",
+        "menu.burgers.buey.detail": "Carne, tomate, lechuga, bacon, queso, huevo, cebolla y mayonesa",
+        "menu.burgers.doblePollo.name": "Hamburguesa de doble pollo",
+        "menu.burgers.doblePollo.detail": "Pollo crujiente, tomate, lechuga, bacon, queso, huevo, pepino y mayonesa",
+        "menu.sandwiches.mixto.name": "Sándwich mixto",
+        "menu.sandwiches.mixto.detail": "Jamón york y queso",
+        "menu.sandwiches.vegetal.name": "Sándwich vegetal",
+        "menu.sandwiches.vegetal.detail": "Mayonesa, lechuga, tomate, queso, zanahoria, remolacha y huevo",
+        "menu.bombitas.chivito.name": "Chivito",
+        "menu.bombitas.chivito.detail": "Lechuga, mayonesa, tomate, lomo, bacon, queso y huevo",
+        "menu.bombitas.brascadaBrutal.name": "Brascada brutal",
+        "menu.bombitas.brascadaBrutal.detail": "Tomate, ternera, jamón, queso de cabra y cebolla",
+        "menu.bombitas.beatriz.name": "Beatriz",
+        "menu.bombitas.beatriz.detail": "Salsa rosa, lechuga, pechuga de pollo, jamón, queso de cabra y cebolla",
+        "menu.bombitas.sopo.name": "Sopo",
+        "menu.bombitas.sopo.detail": "Sobrasada, miel, pechuga de pollo, queso de cabra y cebolla",
+        "menu.bocadillos.chupadedo.name": "Chupadedo",
+        "menu.bocadillos.chupadedo.detail": "Mayonesa, lechuga, tomate, pechuga de pollo, bacon, queso y huevo",
+        "menu.bocadillos.chivito.name": "Chivito",
+        "menu.bocadillos.chivito.detail": "Lechuga, mayonesa, tomate, lomo, bacon, queso y huevo",
+        "menu.bocadillos.medioChivito": "Medio chivito",
+        "menu.bocadillos.brascada.name": "Brascada",
+        "menu.bocadillos.brascada.detail": "Ternera, jamón y cebolla",
+        "menu.bocadillos.almussafes.name": "Almussafes",
+        "menu.bocadillos.almussafes.detail": "Sobrasada, cebolla y queso",
+        "menu.bocadillos.polloEmpanado.name": "Pollo empanado",
+        "menu.bocadillos.polloEmpanado.detail": "Mayonesa, pollo empanado y pimiento",
+        "menu.bocadillos.jamonQueso": "Jamón con queso",
+        "menu.bocadillos.calamaresRomana": "Calamares a la romana",
+        "menu.bocadillos.lomoQuesoJamonTomate": "Lomo, queso, jamón y tomate",
+        "menu.bocadillos.lomoQuesoLonganiza": "Lomo, queso y longaniza",
+        "menu.bocadillos.lomoQueso": "Lomo queso",
+        "menu.bocadillos.longanizaMorcillaChorizo": "Longaniza, morcilla y chorizo",
+        "menu.bocadillos.tortillaJamon": "Tortilla francesa y jamón"
+      });
+
+      Object.assign(translations.en, {
+        "menu.tapas.patatasBravas": "Patatas bravas",
+        "menu.tapas.patatasFritas": "French fries",
+        "menu.tapas.nachos": "Nachos",
+        "menu.tapas.patatasCheeseBacon": "Cheese and bacon fries",
+        "menu.tapas.edamame": "Edamame",
+        "menu.tapas.pimientosPadron": "Padron peppers",
+        "menu.tapas.croquetas.name": "Croquettes",
+        "menu.tapas.croquetas.detail": "5 units",
+        "menu.tapas.gyozas.name": "Gyozas",
+        "menu.tapas.gyozas.detail": "6 units",
+        "menu.tapas.quesoFrito": "Fried cheese",
+        "menu.tapas.pinchitoAnchoa.name": "Anchovy skewer",
+        "menu.tapas.pinchitoAnchoa.detail": "1 unit",
+        "menu.tapas.frituraPolloMixto": "Mixed fried chicken",
+        "menu.tapas.tirasPolloCajun": "Cajun chicken strips",
+        "menu.tapas.alitasPolloPapas": "Chicken wings with fries",
+        "menu.tapas.nuggetsPolloPapas": "Chicken nuggets with fries",
+        "menu.tapas.torreznoSoria": "Soria-style pork crackling",
+        "menu.tapas.polloLimon": "Lemon chicken",
+        "menu.tapas.raboCerdo": "Pork tail",
+        "menu.tapas.boqueronesVinagre": "Anchovies in vinegar",
+        "menu.tapas.boqueronesFritos": "Fried anchovies",
+        "menu.tapas.champinonesPlancha": "Grilled mushrooms",
+        "menu.tapas.calamaresRomana": "Battered squid rings",
+        "menu.tapas.rejosCalamar": "Fried squid tentacles",
+        "menu.tapas.mejillonTigre.name": "Tiger mussels",
+        "menu.tapas.mejillonTigre.detail": "6 units",
+        "menu.tapas.puntillasRebozadas": "Battered baby squid",
+        "menu.tapas.rollitosVegetales": "Vegetable spring rolls",
+        "menu.tapas.vieiraPlancha.name": "Grilled scallops",
+        "menu.tapas.vieiraPlancha.detail": "4 units",
+        "menu.tapas.gambasAjillo": "Garlic prawns",
+        "menu.tapas.langostinosFritos.name": "Fried king prawns",
+        "menu.tapas.langostinosFritos.detail": "6 units",
+        "menu.tapas.cestaPan": "Bread basket",
+        "menu.tapas.panTomateAlioli": "Toasted bread with tomato or aioli",
+        "menu.tapas.sepiaPlancha": "Grilled cuttlefish",
+        "menu.platos.ensaladaValencia.name": "Valencia salad",
+        "menu.platos.ensaladaValencia.detail": "Lettuce, cherry tomatoes, carrot, sweetcorn, tuna, egg, olives, onion and nuts",
+        "menu.platos.ensaladaCesar.name": "Caesar salad",
+        "menu.platos.ensaladaCesar.detail": "Lettuce, croutons, sweetcorn, breaded chicken, Caesar dressing and tomato",
+        "menu.platos.ensaladaCabra.name": "Goat cheese salad",
+        "menu.platos.ensaladaCabra.detail": "Lettuce, goat cheese, walnuts, raisins and tomato",
+        "menu.platos.ensaladaBurrata.name": "Burrata salad",
+        "menu.platos.ensaladaBurrata.detail": "Burrata, rocket, cherry tomatoes, jam, pistachios and walnuts",
+        "menu.platos.huevosRotos": "Broken eggs with ham",
+        "menu.platos.entrecot": "Grilled Simmental beef entrecote",
+        "menu.platos.sepionet": "Grilled baby cuttlefish with green sauce",
+        "menu.platos.calamaresRomana": "Battered squid rings",
+        "menu.platos.emperador": "Grilled swordfish",
+        "menu.platos.pechugaEmpanada": "Breaded chicken breast",
+        "menu.platos.pechugaPlancha": "Grilled chicken breast",
+        "menu.china.arrozTresDelicias": "Special fried rice",
+        "menu.china.arrozGambas": "Fried rice with prawns",
+        "menu.china.arrozTernera": "Fried rice with beef",
+        "menu.china.tallarinesPollo": "Fried noodles with chicken",
+        "menu.china.tallarinesGambas": "Fried noodles with prawns",
+        "menu.china.tallarinesTernera": "Fried noodles with beef",
+        "menu.china.ramen": "Chicken ramen noodles",
+        "menu.china.sopaPicante": "Hot and spicy soup",
+        "menu.china.sopaMaizPollo": "Sweetcorn chicken soup",
+        "menu.burgers.buey.name": "200 g beef burger",
+        "menu.burgers.buey.detail": "Beef, tomato, lettuce, bacon, cheese, egg, onion and mayonnaise",
+        "menu.burgers.doblePollo.name": "Double chicken burger",
+        "menu.burgers.doblePollo.detail": "Crispy chicken, tomato, lettuce, bacon, cheese, egg, cucumber and mayonnaise",
+        "menu.sandwiches.mixto.name": "Mixed sandwich",
+        "menu.sandwiches.mixto.detail": "Ham and cheese",
+        "menu.sandwiches.vegetal.name": "Vegetable sandwich",
+        "menu.sandwiches.vegetal.detail": "Mayonnaise, lettuce, tomato, cheese, carrot, beetroot and egg",
+        "menu.bombitas.chivito.name": "Chivito",
+        "menu.bombitas.chivito.detail": "Lettuce, mayonnaise, tomato, pork loin, bacon, cheese and egg",
+        "menu.bombitas.brascadaBrutal.name": "Brascada Brutal",
+        "menu.bombitas.brascadaBrutal.detail": "Tomato, beef, ham, goat cheese and onion",
+        "menu.bombitas.beatriz.name": "Beatriz",
+        "menu.bombitas.beatriz.detail": "Pink sauce, lettuce, chicken breast, ham, goat cheese and onion",
+        "menu.bombitas.sopo.name": "Sopo",
+        "menu.bombitas.sopo.detail": "Sobrasada, honey, chicken breast, goat cheese and onion",
+        "menu.bocadillos.chupadedo.name": "Chupadedo",
+        "menu.bocadillos.chupadedo.detail": "Mayonnaise, lettuce, tomato, chicken breast, bacon, cheese and egg",
+        "menu.bocadillos.chivito.name": "Chivito",
+        "menu.bocadillos.chivito.detail": "Lettuce, mayonnaise, tomato, pork loin, bacon, cheese and egg",
+        "menu.bocadillos.medioChivito": "Half chivito",
+        "menu.bocadillos.brascada.name": "Brascada",
+        "menu.bocadillos.brascada.detail": "Beef, ham and onion",
+        "menu.bocadillos.almussafes.name": "Almussafes",
+        "menu.bocadillos.almussafes.detail": "Sobrasada, onion and cheese",
+        "menu.bocadillos.polloEmpanado.name": "Breaded chicken",
+        "menu.bocadillos.polloEmpanado.detail": "Mayonnaise, breaded chicken and pepper",
+        "menu.bocadillos.jamonQueso": "Ham and cheese",
+        "menu.bocadillos.calamaresRomana": "Battered squid rings",
+        "menu.bocadillos.lomoQuesoJamonTomate": "Pork loin, cheese, ham and tomato",
+        "menu.bocadillos.lomoQuesoLonganiza": "Pork loin, cheese and longaniza sausage",
+        "menu.bocadillos.lomoQueso": "Pork loin and cheese",
+        "menu.bocadillos.longanizaMorcillaChorizo": "Fresh sausage, black pudding and Spanish chorizo",
+        "menu.bocadillos.tortillaJamon": "French omelette and ham"
+      });
+
+      Object.assign(translations.zh, {
+        "menu.tapas.patatasBravas": "西班牙辣酱土豆",
+        "menu.tapas.patatasFritas": "薯条",
+        "menu.tapas.nachos": "玉米片",
+        "menu.tapas.patatasCheeseBacon": "芝士培根薯条",
+        "menu.tapas.edamame": "毛豆",
+        "menu.tapas.pimientosPadron": "帕德龙青椒",
+        "menu.tapas.croquetas.name": "炸丸子",
+        "menu.tapas.croquetas.detail": "5个",
+        "menu.tapas.gyozas.name": "日式煎饺",
+        "menu.tapas.gyozas.detail": "6个",
+        "menu.tapas.quesoFrito": "炸奶酪",
+        "menu.tapas.pinchitoAnchoa.name": "凤尾鱼小串",
+        "menu.tapas.pinchitoAnchoa.detail": "1串",
+        "menu.tapas.frituraPolloMixto": "混合炸鸡",
+        "menu.tapas.tirasPolloCajun": "卡真鸡柳",
+        "menu.tapas.alitasPolloPapas": "鸡翅配薯条",
+        "menu.tapas.nuggetsPolloPapas": "鸡块配薯条",
+        "menu.tapas.torreznoSoria": "索里亚脆皮五花肉",
+        "menu.tapas.polloLimon": "柠檬鸡",
+        "menu.tapas.raboCerdo": "猪尾",
+        "menu.tapas.boqueronesVinagre": "醋渍凤尾鱼",
+        "menu.tapas.boqueronesFritos": "炸凤尾鱼",
+        "menu.tapas.champinonesPlancha": "铁板蘑菇",
+        "menu.tapas.calamaresRomana": "罗马式炸鱿鱼圈",
+        "menu.tapas.rejosCalamar": "炸鱿鱼须",
+        "menu.tapas.mejillonTigre.name": "虎纹贻贝",
+        "menu.tapas.mejillonTigre.detail": "6个",
+        "menu.tapas.puntillasRebozadas": "裹粉小鱿鱼",
+        "menu.tapas.rollitosVegetales": "蔬菜卷",
+        "menu.tapas.vieiraPlancha.name": "铁板扇贝",
+        "menu.tapas.vieiraPlancha.detail": "4个",
+        "menu.tapas.gambasAjillo": "蒜香虾",
+        "menu.tapas.langostinosFritos.name": "炸大虾",
+        "menu.tapas.langostinosFritos.detail": "6只",
+        "menu.tapas.cestaPan": "面包篮",
+        "menu.tapas.panTomateAlioli": "烤面包配番茄或蒜泥蛋黄酱",
+        "menu.tapas.sepiaPlancha": "铁板墨鱼",
+        "menu.platos.ensaladaValencia.name": "瓦伦西亚沙拉",
+        "menu.platos.ensaladaValencia.detail": "生菜、樱桃番茄、胡萝卜、玉米、金枪鱼、鸡蛋、橄榄、洋葱和坚果",
+        "menu.platos.ensaladaCesar.name": "凯撒沙拉",
+        "menu.platos.ensaladaCesar.detail": "生菜、面包丁、玉米、炸鸡、凯撒酱和番茄",
+        "menu.platos.ensaladaCabra.name": "山羊奶酪沙拉",
+        "menu.platos.ensaladaCabra.detail": "生菜、山羊奶酪、核桃、葡萄干和番茄",
+        "menu.platos.ensaladaBurrata.name": "布拉塔奶酪沙拉",
+        "menu.platos.ensaladaBurrata.detail": "布拉塔奶酪、芝麻菜、樱桃番茄、果酱、开心果和核桃",
+        "menu.platos.huevosRotos": "火腿碎蛋薯条",
+        "menu.platos.entrecot": "铁板西门塔尔牛排",
+        "menu.platos.sepionet": "青酱铁板小墨鱼",
+        "menu.platos.calamaresRomana": "罗马式炸鱿鱼圈",
+        "menu.platos.emperador": "铁板剑鱼",
+        "menu.platos.pechugaEmpanada": "炸鸡胸",
+        "menu.platos.pechugaPlancha": "铁板鸡胸",
+        "menu.china.arrozTresDelicias": "三鲜炒饭",
+        "menu.china.arrozGambas": "虾仁炒饭",
+        "menu.china.arrozTernera": "牛肉炒饭",
+        "menu.china.tallarinesPollo": "鸡肉炒面",
+        "menu.china.tallarinesGambas": "虾仁炒面",
+        "menu.china.tallarinesTernera": "牛肉炒面",
+        "menu.china.ramen": "鸡肉拉面",
+        "menu.china.sopaPicante": "酸辣汤",
+        "menu.china.sopaMaizPollo": "鸡肉玉米汤",
+        "menu.burgers.buey.name": "200克牛肉汉堡",
+        "menu.burgers.buey.detail": "牛肉、番茄、生菜、培根、奶酪、鸡蛋、洋葱和蛋黄酱",
+        "menu.burgers.doblePollo.name": "双层鸡肉汉堡",
+        "menu.burgers.doblePollo.detail": "脆鸡、番茄、生菜、培根、奶酪、鸡蛋、黄瓜和蛋黄酱",
+        "menu.sandwiches.mixto.name": "火腿芝士三明治",
+        "menu.sandwiches.mixto.detail": "火腿和奶酪",
+        "menu.sandwiches.vegetal.name": "蔬菜三明治",
+        "menu.sandwiches.vegetal.detail": "蛋黄酱、生菜、番茄、奶酪、胡萝卜、甜菜和鸡蛋",
+        "menu.bombitas.chivito.name": "Chivito",
+        "menu.bombitas.chivito.detail": "生菜、蛋黄酱、番茄、猪里脊、培根、奶酪和鸡蛋",
+        "menu.bombitas.brascadaBrutal.name": "Brascada Brutal",
+        "menu.bombitas.brascadaBrutal.detail": "番茄、牛肉、火腿、山羊奶酪和洋葱",
+        "menu.bombitas.beatriz.name": "Beatriz",
+        "menu.bombitas.beatriz.detail": "粉红酱、生菜、鸡胸肉、火腿、山羊奶酪和洋葱",
+        "menu.bombitas.sopo.name": "Sopo",
+        "menu.bombitas.sopo.detail": "西班牙辣香肠酱、蜂蜜、鸡胸肉、山羊奶酪和洋葱",
+        "menu.bocadillos.chupadedo.name": "Chupadedo",
+        "menu.bocadillos.chupadedo.detail": "蛋黄酱、生菜、番茄、鸡胸肉、培根、奶酪和鸡蛋",
+        "menu.bocadillos.chivito.name": "Chivito",
+        "menu.bocadillos.chivito.detail": "生菜、蛋黄酱、番茄、猪里脊、培根、奶酪和鸡蛋",
+        "menu.bocadillos.medioChivito": "半份 Chivito",
+        "menu.bocadillos.brascada.name": "Brascada",
+        "menu.bocadillos.brascada.detail": "牛肉、火腿和洋葱",
+        "menu.bocadillos.almussafes.name": "Almussafes",
+        "menu.bocadillos.almussafes.detail": "西班牙辣香肠酱、洋葱和奶酪",
+        "menu.bocadillos.polloEmpanado.name": "炸鸡夹饼",
+        "menu.bocadillos.polloEmpanado.detail": "蛋黄酱、炸鸡和甜椒",
+        "menu.bocadillos.jamonQueso": "火腿奶酪夹饼",
+        "menu.bocadillos.calamaresRomana": "罗马式炸鱿鱼圈夹饼",
+        "menu.bocadillos.lomoQuesoJamonTomate": "猪里脊、奶酪、火腿和番茄",
+        "menu.bocadillos.lomoQuesoLonganiza": "猪里脊、奶酪和西班牙香肠",
+        "menu.bocadillos.lomoQueso": "猪里脊奶酪夹饼",
+        "menu.bocadillos.longanizaMorcillaChorizo": "香肠、血肠和辣香肠",
+        "menu.bocadillos.tortillaJamon": "法式蛋饼配火腿"
+      });
+
+      const langButtons = document.querySelectorAll(".lang-button");
+      const i18nNodes = document.querySelectorAll("[data-i18n]");
+
+      function applyLanguage(lang) {
+        const dictionary = translations[lang] || translations.es;
+        document.documentElement.lang = lang === "zh" ? "zh" : lang;
+        document.title = dictionary.title;
+
+        i18nNodes.forEach((node) => {
+          const key = node.dataset.i18n;
+          if (dictionary[key]) {
+            node.textContent = dictionary[key];
+          }
+        });
+
+        langButtons.forEach((button) => {
+          button.classList.toggle("is-active", button.dataset.lang === lang);
+        });
+
+        window.localStorage.setItem("menu-language", lang);
+      }
+
+      langButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          applyLanguage(button.dataset.lang);
+        });
+      });
+
+      const savedLanguage = window.localStorage.getItem("menu-language") || "es";
+      applyLanguage(savedLanguage);
+    </script>
   </body>
 </html>
